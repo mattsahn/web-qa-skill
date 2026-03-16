@@ -1,0 +1,23 @@
+{
+  "skill_name": "web-qa",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need QA instructions for Hacker News at https://news.ycombinator.com. Focus on site health and bug hunting. No auth needed.",
+      "expected_output": "A QA markdown document (at least 400 lines) with a screenshots directory containing at least 8 screenshots of actual HN pages. The document must use proper markdown image embed syntax (![alt text](screenshots/filename.png)) for at least 5 distinct screenshots — plain text references to filenames do not count. Must cover page load checks with specific HN URLs (/newest, /ask, /show, /jobs, etc.), broken link checks, console error monitoring, and bug hunting scenarios for form edge cases (search, login) referencing actual CSS selectors or element descriptions found during crawl. Each test scenario must have explicit pass/fail criteria with checkboxes. Must include a recommended test schedule with frequency suggestions.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Can you create a QA plan for GitHub at https://github.com? I want to focus on key workflows and UX/UI. Skip any authenticated flows — just test what's publicly accessible.",
+      "expected_output": "A QA markdown document (at least 500 lines) with a screenshots directory containing at least 10 screenshots of actual GitHub pages. The document must use proper markdown image embed syntax (![alt text](screenshots/filename.png)) for at least 8 distinct screenshots — plain text references to filenames do not count. Must cover public workflows (search, repo browsing, issue viewing, code navigation) with step-by-step test scenarios referencing actual GitHub UI elements (search palette, branch selector, file browser, etc.). Must include responsive/mobile viewport checks at specific breakpoints (375px mobile, 768px tablet, desktop) with screenshots at multiple widths. Must not include any scenarios requiring login/authentication. Each test scenario must have explicit pass/fail criteria with checkboxes. Must include a recommended test schedule.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Generate a full QA checklist for https://books.toscrape.com — it's a demo e-commerce site. I want the works: site health, workflows, UX, bugs, content, and security. No login needed.",
+      "expected_output": "A comprehensive QA markdown document (at least 700 lines) with a screenshots directory containing at least 10 screenshots. The document must use proper markdown image embed syntax (![alt text](screenshots/filename.png)) for at least 8 distinct screenshots — plain text references do not count. Must cover all 6 focus areas with substantive sections for each. E-commerce workflows must include product browsing, category navigation, pagination, and add-to-cart. SEO section must explicitly check for sitemap.xml, robots.txt, structured data, and meta tags — not just meta tags alone. Security section must check HTTPS, security headers, mixed content, and information exposure. Each test scenario must have explicit pass/fail criteria with checkboxes. Must include a recommended test schedule table with frequency (daily/weekly/monthly) for different test categories.",
+      "files": []
+    }
+  ]
+}
