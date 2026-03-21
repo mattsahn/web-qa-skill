@@ -108,20 +108,19 @@ screenshots/10-console-errors.png
 
 Number them in the order they were captured. Aim for at least 8-10 screenshots to thoroughly document the site. Focus on what's important for the QA plan — key pages, interactive elements, error states, and mobile views.
 
-### What to Record During Crawling
+### Capture Concrete Details During Crawling
 
-As you crawl, keep notes on:
-- All pages discovered (URL, title, purpose)
-- Navigation structure and hierarchy
-- Forms and their fields
-- Interactive elements and their behavior
-- Visual issues spotted (layout broken, elements overlapping, etc.)
-- Console errors or failed requests
-- Performance observations (slow loads, large images)
-- Accessibility observations (missing alt text, poor contrast, no focus indicators)
-- Anything that looks broken, inconsistent, or could be improved
+As you crawl, actively collect specific, verifiable data — this is what separates a useful QA doc from a generic checklist:
 
-These observations directly feed into the QA instructions you'll write.
+- **Page inventory**: URL, title, HTTP status, and measured load time for every page visited
+- **CSS selectors and locators**: For every interactive element you test (buttons, form fields, links, menus), record the CSS selector or a descriptive locator (e.g., `button.hnuser`, `input[name="acct"]`, `.morelink`). These let an automated agent find the exact element later.
+- **Actual measurements**: Record real numbers from the crawl — page load times, number of items rendered, image sizes, console error counts. Use these as baseline values in your pass criteria (e.g., "Page loaded in 966ms during crawl — pass if under 3s").
+- **Forms and their fields**: Field names, types, labels, required/optional status, and validation behavior observed
+- **Console output**: Exact error messages, warning text, failed request URLs
+- **Visual issues**: Layout problems, overlapping elements, broken images — screenshot each one
+- **Navigation structure**: Full sitemap of discovered pages and how they connect
+
+These concrete details are what make the QA doc actionable rather than theoretical.
 
 ---
 
@@ -144,6 +143,17 @@ Write the output to `web-qa-output/qa-instructions.md` using this structure:
 **Generated:** [date]
 **Focus Areas:** [list of selected areas]
 **Environment:** [production/staging/dev]
+
+## Instructions for the Executing Agent
+
+When you execute these QA instructions, you MUST produce a results markdown report that includes screenshots embedded inline. Follow these rules:
+
+1. **Capture screenshots** at every step where you verify a pass/fail condition, encounter an issue, or complete a key interaction. Save them to a `screenshots/` directory with descriptive numbered names (e.g., `01-homepage-loaded.png`, `02-login-form-error.png`).
+2. **Embed every screenshot** in your results markdown using `![description](screenshots/filename.png)` syntax. Never just mention a screenshot filename in plain text — always use the markdown image embed so it renders inline when the report is viewed.
+3. **Place screenshots next to the relevant finding.** When reporting a pass/fail result for a scenario, embed the screenshot immediately after the result so the reader can see the visual evidence.
+4. Your results report is the primary deliverable. A reader should be able to understand every finding visually without needing to open the screenshots directory separately.
+
+---
 
 ## Site Overview
 
@@ -191,7 +201,7 @@ Write the output to `web-qa-output/qa-instructions.md` using this structure:
 
 ## Known Issues Found During Crawl
 
-[If you spotted any actual issues during the crawl, document them here with screenshots. This gives the user immediate value.]
+[Document every issue you actually found during the crawl — this section is often the most valuable part of the entire QA document because it gives the user immediate, actionable findings rather than just a checklist to run later. Include screenshots of broken states, the exact URLs affected, and severity ratings (Critical/High/Medium/Low). Even "minor" findings like missing meta tags, exposed server headers, or inconsistent UI elements belong here. An empty "no issues found" is fine but rare — look carefully.]
 
 ## Recommended Test Schedule
 
@@ -220,8 +230,10 @@ This is where the quality of the crawl pays off. Every test scenario should refe
 - Use actual URLs, not placeholders
 - Reference real form fields by their labels or names
 - Describe real buttons, links, and UI elements as they appear on the site
-- Include screenshots using proper markdown image embed syntax: `![Description](screenshots/XX-name.png)` — never use plain text references to screenshot filenames; always use the `![]()` embed syntax so images render inline
+- **Include CSS selectors or descriptive locators** for every interactive element being tested (e.g., `a.storylink`, `input[name="q"]`, `.nav-item:nth-child(3)`). This is critical for automated execution — without selectors, an agent has to guess how to find elements.
+- Include screenshots using proper markdown image embed syntax: `![Description](screenshots/XX-name.png)` — never use plain text references to screenshot filenames; always use the `![]()` embed syntax so images render inline. Aim for at least one screenshot reference per test scenario section.
 - Write pass/fail criteria that are specific and unambiguous, using checkbox format (`- [ ] condition`)
+- **Include actual measurements from the crawl** as baseline values in pass criteria — page load times, element counts, response codes. This grounds the criteria in reality rather than arbitrary thresholds.
 
 The scenarios should be written so that an automated agent can follow them step by step using Playwright. Include CSS selectors or descriptive locators where you noticed them during crawling, as these help the executing agent find the right elements.
 
@@ -248,7 +260,7 @@ Once the QA instructions are written:
    - Any issues spotted during the crawl
    - Recommended test frequency
 3. Ask if they want to adjust anything — add scenarios, change focus, go deeper on a particular area
-4. Mention that the document is designed to be handed to an agent for recurring execution, and the screenshots directory needs to stay alongside it for the references to work
+4. Mention that the document is designed to be handed to an agent for recurring execution, and includes instructions at the top telling the executing agent to embed screenshots in its results report
 
 ---
 
